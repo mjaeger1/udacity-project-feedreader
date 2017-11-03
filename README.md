@@ -9,7 +9,7 @@ Run index.html
 All specs are included in /jasmine/spec/feedreader.js
 
 Test suite 1:
-```
+```javascript
     describe('RSS Feeds', function() {
 
         it('are defined', function() {
@@ -34,7 +34,7 @@ Test suite 1:
 ```
 
 Test suite 2:
-```
+```javascript
     describe('The menu', function() {
 
          it('is hidden by default', function() {
@@ -52,7 +52,7 @@ Test suite 2:
 ```
 
 Test suite 3:
-```
+```javascript
     describe('Initial Entries', function() {
 
          beforeEach(function(done) {
@@ -69,7 +69,7 @@ Test suite 3:
 ```
 
 Test suite 4:
-```
+```javascript
     describe('New Feed Selection', function() {
 
          var initialContent, newContent;
