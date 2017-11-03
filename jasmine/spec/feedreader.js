@@ -8,11 +8,14 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
-$(function() {
+$(function() {  // short for $(document).ready(function() { ... });
+
+
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
     */
+
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
@@ -32,29 +35,58 @@ $(function() {
          * and that the URL is not empty.
          */
 
+         it('have all URLs', function() {
+           allFeeds.forEach(function(f){
+             expect(f.url).toBeDefined();
+             expect(f.url.length).not.toBe(0);
+           })
+         });
+
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+         it('have all names', function() {
+           allFeeds.forEach(function(f){
+             expect(f.name).toBeDefined();
+             expect(f.name.length).not.toBe(0);
+           })
+         });
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
+
+    describe('The menu', function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+         it('is hidden by default', function() {
+           expect($('body').attr('class')).toMatch("menu-hidden");
+         });
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+          it('shows/hides on-click', function(){
+
+            $('.menu-icon-link').trigger('click'); // equals: $('.menu-icon-link').click();
+            expect($('body').attr('class').length).toBe(0);
+            $('.menu-icon-link').trigger('click');
+            expect($('body').attr('class')).toMatch("menu-hidden");
+          });
+    });
+
 
     /* TODO: Write a new test suite named "Initial Entries" */
+
+    describe('Initial Entries', function() {
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -63,10 +95,47 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
+         beforeEach(function(done) {
+           loadFeed(0, function() {
+             done();
+           });
+         });
+
+         it('are loaded', function(done) {
+           expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+           done();
+         });
+    });
+
+
     /* TODO: Write a new test suite named "New Feed Selection" */
+
+    describe('New Feed Selection', function() {
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+         var initialContent, newContent;
+
+         beforeEach(function(done) {
+           initialContent = $('.feed').html(); // app.js inits with (0)
+           loadFeed(1, function() { // loadFeed with (1)
+             done();
+           });
+         });
+
+         it('actual changes the content', function(done){
+           newContent = $('.feed').html();
+           // console.log(initialContent === newContent);
+           expect(newContent).not.toEqual(initialContent);
+           done();
+         });
+
+         afterEach(function() {
+           loadFeed(0); // change feed back to (0)
+         });
+    });
+
 }());
