@@ -39,7 +39,7 @@ $(function() {  // short for $(document).ready(function() { ... });
            allFeeds.forEach(function(f){
              expect(f.url).toBeDefined();
              expect(f.url.length).not.toBe(0);
-           })
+           });
          });
 
 
@@ -51,7 +51,7 @@ $(function() {  // short for $(document).ready(function() { ... });
            allFeeds.forEach(function(f){
              expect(f.name).toBeDefined();
              expect(f.name.length).not.toBe(0);
-           })
+           });
          });
     });
 
