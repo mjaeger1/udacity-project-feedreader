@@ -101,13 +101,11 @@ $(function() {  // short for $(document).ready(function() { ... });
             });
           });
 
-          it('test', function(done) {
+          it('are loaded', function(done) {
             expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
           });
     });
-
-
 
 
     /* Test suite covering a test to ensure new content is loading
@@ -121,11 +119,8 @@ $(function() {  // short for $(document).ready(function() { ... });
          */
 
          var initialContent, newContent;
-         // var originalTimeout;
 
          beforeEach(function(done) {
-           // originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-           // jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
            loadFeed(0, function() {
              initialContent = $('.feed').html();
              loadFeed(1, function() {
@@ -136,13 +131,11 @@ $(function() {  // short for $(document).ready(function() { ... });
          });
 
          it('actual changes the content', function(done) {
-           // console.log(initialContent === newContent);
            expect(newContent).not.toEqual(initialContent);
            done();
          });
 
          afterEach(function() {
-           // jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
            loadFeed(0);
          });
     });
