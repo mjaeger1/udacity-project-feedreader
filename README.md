@@ -35,62 +35,63 @@ Test suite 1:
 
 Test suite 2:
 ```javascript
-    describe('The menu', function() {
+describe('The menu', function() {
 
-         it('is hidden by default', function() {
-           expect($('body').attr('class')).toMatch("menu-hidden");
-         });
+        it('is hidden by default', function() {
+         expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
 
-          it('shows/hides on-click', function(){
-
-            $('.menu-icon-link').trigger('click'); // equals: $('.menu-icon-link').click();
-            expect($('body').attr('class').length).toBe(0);
-            $('.menu-icon-link').trigger('click');
-            expect($('body').attr('class')).toMatch("menu-hidden");
-          });
-    });
+        it('shows/hides on-click', function() {
+          $('.menu-icon-link').trigger('click'); // equals: $('.menu-icon-link').click();
+          expect($('body').hasClass('menu-hidden')).toBe(false);
+          $('.menu-icon-link').trigger('click');
+          expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
+});
 ```
 
 Test suite 3:
 ```javascript
-    describe('Initial Entries', function() {
+describe('Initial Entries', function() {
 
-         beforeEach(function(done) {
-           loadFeed(0, function() {
-             done();
-           });
-         });
+      beforeEach(function(done) {
+        loadFeed(0, function() {
+          done();
+        });
+      });
 
-         it('are loaded', function(done) {
-           expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
-           done();
-         });
-    });
+      it('test', function(done) {
+        expect($('.feed .entry').length).toBeGreaterThan(0);
+        done();
+      });
+});
 ```
 
 Test suite 4:
 ```javascript
-    describe('New Feed Selection', function() {
+describe('New Feed Selection', function() {
 
-         var initialContent, newContent;
+     var initialContent, newContent;
 
-         beforeEach(function(done) {
-           initialContent = $('.feed').html();
-           loadFeed(1, function() {
-             done();
-           });
-         });
-
-         it('actual changes the content', function(done){
+     beforeEach(function(done) {
+       loadFeed(0, function() {
+         initialContent = $('.feed').html();
+         loadFeed(1, function() {
            newContent = $('.feed').html();
-           expect(newContent).not.toEqual(initialContent);
            done();
          });
+       });
+     });
 
-         afterEach(function() {
-           loadFeed(0);
-         });
-    });
+     it('actual changes the content', function(done) {
+       expect(newContent).not.toEqual(initialContent);
+       done();
+     });
+
+     afterEach(function() {
+       loadFeed(0);
+     });
+});
 ```
 
 ## Initial Project Briefing by Udacity
